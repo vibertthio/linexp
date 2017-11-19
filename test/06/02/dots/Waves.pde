@@ -9,9 +9,9 @@ class Waves {
     pg = _p;
     yoffset = _y;
     waves = new Wave[3];
-    waves[0] = new Wave(0, pg, random(0, 5), height * 0.5 + _y, 3);
-    waves[1] = new Wave(1, pg, random(0, 5), height * 0.45 + _y);
-    waves[2] = new Wave(2, pg, random(0, 5), height * 0.6 + _y);
+    waves[0] = new Wave(0, pg, random(0, 5), pg.height * 0.5 + _y, 3);
+    waves[1] = new Wave(1, pg, random(0, 5), pg.height * 0.4 + _y);
+    waves[2] = new Wave(2, pg, random(0, 5), pg.height * 0.6 + _y);
 
     connectionNumber = new int[2][waves[0].numberOfPoints];
     for (int i = 0; i < connectionNumber[0].length; i++) {
@@ -33,7 +33,8 @@ class Waves {
     render();
   }
   void update() {
-
+    waves[1].ypos = pg.height * 0.4 * (1.1 - sin(frameCount * 0.01) * 0.1) + yoffset;
+    waves[2].ypos = pg.height * 0.6 * (1.1 + sin(frameCount * 0.01) * 0.1) + yoffset;
   }
   void render() {
     waves[0].draw();

@@ -2,7 +2,7 @@ import peasy.*;
 PeasyCam cam;
 
 void settings() {
-  size(500, 500, P3D);
+  size(1000, 1000, P3D);
 }
 
 void setup() {
