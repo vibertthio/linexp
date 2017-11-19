@@ -13,6 +13,9 @@ void setup() {
 }
 
 void draw() {
-  translate(width * 0.5, height * 0.5);
-  sphere(100);
+  background(0);
+  stroke(255);
+  strokeWeight(10);
+  point(0, 0, 0);
+  point(0, 500, 0);
 }
