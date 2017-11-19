@@ -7,17 +7,25 @@ class Wave {
   int unit = 40;
   int numberOfPoints = (width / unit) + 3;
   int w;
+  int interconnectionNumber;
 
   PVector[] points;
   float[] radius;
   float[] dist;
 
   Wave(int _i, PGraphics _c, float _yo, float _yp) {
+    init(_i, _c, _yo, _yp, 4);
+  }
+  Wave(int _i, PGraphics _c, float _yo, float _yp, int _ico) {
+    init(_i, _c, _yo, _yp, _ico);
+  }
+  void init(int _i, PGraphics _c, float _yo, float _yp, int _icn) {
     index = _i;
     canvas = _c;
     yoff = _yo;
     ypos = _yp;
     points = new PVector[numberOfPoints];
+    interconnectionNumber = _icn;
 
     radius = new float[numberOfPoints];
     dist = new float[numberOfPoints];
@@ -52,19 +60,23 @@ class Wave {
       canvas.fill(0, 255);
       canvas.noStroke();
       // canvas.ellipse(x, y, 10, 10);
-      canvas.ellipse(x + dist[c], y, radius[c] * (1 + sin(xoff * 2) * 2), radius[c] * (1 + sin(xoff * 2) * 2));
+      canvas.ellipse(x + dist[c], y, radius[c] * (1 + sin(xoff * 2) * 0.5), radius[c] * (1 + sin(xoff * 2) * 0.5));
       // Increment x dimension for noise
       xoff += 0.15;
 
       points[c] = new PVector(x + dist[c], y);
-      for (int i = c - 1; i > -1 && i > (c - 5); i--) {
-        canvas.stroke(0, 20);
+      for (int i = c - 1; i > -1 && i > (c - interconnectionNumber); i--) {
+        canvas.stroke(0, 80 * (1 + sin(xoff * 2) * 0.8));
         canvas.strokeWeight(1);
         canvas.line(x + dist[c], y, points[i].x, points[i].y);
       }
 
       if (c != 0 && c != numberOfPoints - 1) {
-        dist[c] += map(noise(xoff, yoff + c * 0.01), 0, 1, -0.5, 0.5);
+        if (random(1) < 0.005) {
+          dist[c] = 0;
+        } else {
+          dist[c] += map(noise(xoff, yoff + c * 1), 0, 1, -0.5, 0.5);
+        }
       }
 
       c++;
@@ -74,9 +86,9 @@ class Wave {
     // vertex(width, height);
     // vertex(0, height);
 
-    canvas.noFill();
-    canvas.stroke(0, 255);
-    canvas.strokeWeight(2);
+    // canvas.noFill();
+    // canvas.stroke(0, 255);
+    // canvas.strokeWeight(2);
     // canvas.endShape();
   }
 
