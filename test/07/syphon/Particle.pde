@@ -24,9 +24,9 @@ class Particle {
     pg.pushMatrix();
     // pg.translate(xpos, ypos, zpos);
     pg.translate(
-      xpos + random(20),
-      ypos + random(20),
-      zpos + random(20)
+      xpos + random(10),
+      ypos + random(10),
+      zpos + random(10)
     );
     pg.stroke(255);
     pg.strokeWeight(3);
