@@ -6,6 +6,7 @@ PShader shade;
 SyphonServer server;
 int state = 4;
 int stateLimit = 4;
+boolean usingShader = true;
 
 // state: 0
 Rectangle[] recs_1;
@@ -38,6 +39,9 @@ void setup() {
 void draw() {
   pg.beginDraw();
   pg.background(0);
+  pg.rectMode(CENTER);
+  pg.fill(255);
+  pg.rect(pg.width * 0.5, pg.height * 0.5, 100, 100);
   rectanglesUpdate();
   rectanglesDraw();
   wavesDraw();
@@ -45,9 +49,13 @@ void draw() {
   pg.endDraw();
 
   pgout.beginDraw();
-  pgout.shader(shade);
+  if (usingShader) {
+    shaderUpdate();
+    pgout.shader(shade);
+  }
   tintUpdate();
   pgout.image(pg, 0, 0);
+  pgout.resetShader();
   pgout.endDraw();
 
   image(pgout, 0, 0);
@@ -70,12 +78,30 @@ void generalInit() {
 }
 void shaderSetup() {
   // shade = loadShader("blur.glsl");
-  // shade.set("offset", 1.0, 1.0);
-  shade = loadShader("blur_2.glsl");
-  shade.set("texOffset", 1.0, 0);
-  shade.set("blurSize", 5);
-  shade.set("horizontalPass", 1);
-  shade.set("sigma", 2.5);
+  // shade.set("offset", 0.1, 0.1);
+
+  // shade = loadShader("blur_2.glsl");
+  // shade.set("texOffset", 1.0, 1.0);
+  // shade.set("blurSize", 20);
+  // shade.set("horizontalPass", 1);
+  // shade.set("sigma", 2.5);
+
+  shade = loadShader("neon.glsl");
+}
+void shaderUpdate() {
+
+  // TEST
+  // float brt = map(mouseX, 0, width, 0, 0.5);
+  // int rad = (int) map(mouseY, 0, height, 0, 3);
+  // println("brt: " + brt + ", rad: " + rad);
+  // shade.set("brt", map(mouseX, 0, width, 0, 0.5));
+  // shade.set("rad", (int) map(mouseY, 0, height, 0, 3));
+
+  float brt = 0.1 + 0.1 * sin(float(millis()) / 300.0);
+  int rad = 2;
+  println("brt: " + brt + ", rad: " + rad);
+  shade.set("brt", brt);
+  shade.set("rad", rad);
 }
 void keyPressed() {
   if (key == 'z') {
@@ -89,9 +115,10 @@ void keyPressed() {
     if (state == 3) {
       wavesInteract();
     }
-  }
-
-  if (state == 0) {
+  } else if (key == ' ') {
+    println("trigger shader");
+    usingShader = !usingShader;
+  } else if (state == 0) {
     resetRecs_1();
     if (key == '1') {
       recs_1[0].reset();
