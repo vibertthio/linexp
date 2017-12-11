@@ -1,8 +1,8 @@
 Waves[] ws;
 PGraphics pg;
 void settings() {
-  // size(1000, 600);
-  fullScreen();
+  size(1000, 600);
+  // fullScreen();
 }
 
 void setup() {
