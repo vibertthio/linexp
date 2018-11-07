@@ -8,8 +8,7 @@ void settings() {
 void setup() {
   pg = createGraphics(width, height);
   ws = new Waves[2];
-  ws[0] = new Waves(pg, -150);
-  ws[1] = new Waves(pg, 150);
+  ws[0] = new Waves(pg, 0);
 }
 
 void draw() {
@@ -17,7 +16,6 @@ void draw() {
   pg.beginDraw();
   pg.background(255);
   ws[0].draw();
-  ws[1].draw();
   pg.endDraw();
   image(pg, 0, 0);
 }

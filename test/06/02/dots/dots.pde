@@ -18,7 +18,7 @@ void draw() {
   system.draw();
   pg.endDraw();
   image(pg, 0, 0);
-  // morph();
+  morph();
 }
 
 void morph() {
@@ -29,12 +29,12 @@ void morph() {
   }
   if (frameCount % 10 == 0) {
     if (random(1) > 0.2) {
-      system.wss[0].shift();
+      // system.wss[0].shift();
     }
   }
   if (frameCount % 10 == 5) {
     if (random(1) > 0.2) {
-      system.wss[1].shift();
+      // system.wss[1].shift();
     }
   }
 }
